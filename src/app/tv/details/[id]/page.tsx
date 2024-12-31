@@ -1,9 +1,22 @@
-import React from 'react'
+"use client";
 
-const TvDetails = () => {
+import SectionTVDetail from "@/components/section/section-detail-tv";
+import { useParams } from "next/navigation";
+import React from "react";
+
+const TVDetail = () => {
+  const params = useParams();
+  const { id } = params;
+
+  if (!id) {
+    return <div>TV not found</div>;
+  }
+
   return (
-    <div>TvDetails</div>
-  )
-}
+    <>
+      <SectionTVDetail id={id} />
+    </>
+  );
+};
 
-export default TvDetails
+export default TVDetail;

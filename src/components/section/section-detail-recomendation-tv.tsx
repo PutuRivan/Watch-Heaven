@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import CardMovie from "../cards/card-movie";
-// import { useFetchMovieRecomendation } from "@/hooks/movie/useFetchMovieRecommendation";
-import { TMovieRecommendation } from "@/types";
+import { TTvRecomendation } from "@/types";
 import { api } from "@/lib/axios";
+import CardTV from "../cards/card-tv";
 
 interface Props {
   id: number;
 }
 
-const MovieDetailRecomendation = ({ id }: Props) => {
-  const [recomendationMovie, setRecomendationMovie] =
-    useState<TMovieRecommendation[]>();
+const TVDetailRecomendation = ({ id }: Props) => {
+  const [recomendationTV, setrecomendationTV] = useState<TTvRecomendation[]>();
   const [recomendationIsLoading, setRecomendationIsLoading] = useState(false);
   const [recomendationError, setRecomendationError] = useState(false);
 
@@ -18,8 +16,8 @@ const MovieDetailRecomendation = ({ id }: Props) => {
     const fetchRecomendation = async () => {
       setRecomendationIsLoading(true);
       try {
-        const response = await api.get(`/movie/${id}/recommendations`);
-        setRecomendationMovie(response.data.results);
+        const response = await api.get(`/tv/${id}/recommendations`);
+        setrecomendationTV(response.data.results);
         setRecomendationIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -32,8 +30,8 @@ const MovieDetailRecomendation = ({ id }: Props) => {
 
   return (
     <div className="grid grid-cols-4 gap-4">
-      {recomendationMovie?.map((data, index) => (
-        <CardMovie
+      {recomendationTV?.map((data, index) => (
+        <CardTV
           data={data}
           loading={recomendationIsLoading}
           error={recomendationError}
@@ -44,4 +42,4 @@ const MovieDetailRecomendation = ({ id }: Props) => {
   );
 };
 
-export default MovieDetailRecomendation;
+export default TVDetailRecomendation;

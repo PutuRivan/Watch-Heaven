@@ -8,7 +8,7 @@ import { TTv } from "@/types";
 interface Props {
   data: TTv;
   loading: boolean | undefined;
-  error?: Error | null;
+  error?: Error | null | boolean;
 }
 
 const CardTV = ({ data, loading }: Props) => {
