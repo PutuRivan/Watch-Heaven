@@ -29,11 +29,12 @@ export async function getMovieDetails({ id }: IMovieDetails) {
 }
 interface IMovieList {
   category: string;
+  page: number;
 }
 
-export async function getMovieList({ category }: IMovieList) {
+export async function getMovieList({ category, page }: IMovieList) {
   try {
-    const response = await api.get(`/movie/${category}`);
+    const response = await api.get(`/movie/${category}?page=${page}`);
     return response.data.results;
   } catch (error) {
     console.error(error);

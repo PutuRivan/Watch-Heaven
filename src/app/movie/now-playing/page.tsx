@@ -13,7 +13,7 @@ const NowPlayingMovie = () => {
     data: nowPlayingMovie,
     isLoading: nowPlayingMovieIsLoading,
     error: nowPlayingMovieError,
-  } = useFetchMovieList({ category: "now_playing" });
+  } = useFetchMovieList({ category: "now_playing", page: onPage });
 
   useEffect(() => {
     if (nowPlayingMovie) {

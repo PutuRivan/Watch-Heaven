@@ -82,7 +82,7 @@ export function Navbar() {
               <ul className="flex flex-col gap-3 p-4 md:w-[100px] lg:w-[300px]">
                 <li>
                   <Link
-                    href="/movie/now-playing"
+                    href="/movie/now-playing#1"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -90,7 +90,7 @@ export function Navbar() {
                     </div>
                   </Link>
                   <Link
-                    href="/movie/top-rated"
+                    href="/movie/top-rated#1"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -98,7 +98,7 @@ export function Navbar() {
                     </div>
                   </Link>
                   <Link
-                    href="/movie/popular"
+                    href="/movie/popular#1"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -106,7 +106,7 @@ export function Navbar() {
                     </div>
                   </Link>
                   <Link
-                    href="/movie/up-coming"
+                    href="/movie/up-coming#1"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -124,7 +124,7 @@ export function Navbar() {
               <ul className="flex flex-col gap-3 p-4 md:w-[100px] lg:w-[300px]">
                 <li>
                   <Link
-                    href="/tv/on-the-air"
+                    href="/tv/on-the-air#1"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -132,7 +132,7 @@ export function Navbar() {
                     </div>
                   </Link>
                   <Link
-                    href="/tv/top-rated"
+                    href="/tv/top-rated#1"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -140,7 +140,7 @@ export function Navbar() {
                     </div>
                   </Link>
                   <Link
-                    href="/tv/popular"
+                    href="/tv/popular#1"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -148,7 +148,7 @@ export function Navbar() {
                     </div>
                   </Link>
                   <Link
-                    href="/tv/airing-today"
+                    href="/tv/airing-today#1"
                     className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                   >
                     <div className="text-sm font-medium leading-none">
@@ -229,5 +229,3 @@ export function Navbar() {
     </nav>
   );
 }
-
-
