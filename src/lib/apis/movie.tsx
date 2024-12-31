@@ -27,10 +27,13 @@ export async function getMovieDetails({ id }: IMovieDetails) {
     console.error(error);
   }
 }
-export async function getMovieRecomendation({ id }: IMovieDetails) {
+interface IMovieList {
+  category: string;
+}
+
+export async function getMovieList({ category }: IMovieList) {
   try {
-     const response = await api.get(`/movie/${id}/recommendations`);
-    console.log(response.data.results)
+    const response = await api.get(`/movie/${category}`);
     return response.data.results;
   } catch (error) {
     console.error(error);
