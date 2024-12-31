@@ -210,7 +210,7 @@ export function Navbar() {
         {/* User */}
         <Menubar>
           <MenubarMenu>
-            <MenubarTrigger className=" cursor-pointer">
+            <MenubarTrigger className="cursor-pointer">
               <CgProfile size={24} />
             </MenubarTrigger>
             <MenubarContent>
