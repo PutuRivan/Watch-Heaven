@@ -1,9 +1,11 @@
 "use client";
 
 import HomeMovieCards from "@/components/section/section-card-movies";
+import HomeMovieTVs from "@/components/section/section-card-tv";
 import { useFetchDiscoverMovie } from "@/hooks/movie/useFetchDiscoverMovie";
 import { useFetchMovieList } from "@/hooks/movie/useFetchMovieList";
-import { TMovie } from "@/types";
+import { useFetchDiscoverTV } from "@/hooks/tv/useFetchDiscoverTV";
+import { TMovie, TTv } from "@/types";
 import { useEffect, useState } from "react";
 
 const Home = () => {
@@ -12,6 +14,7 @@ const Home = () => {
   const [PopularMovies, setPopularMovies] = useState<TMovie[]>([]);
   const [TopRatedMovies, setTopRatedMovies] = useState<TMovie[]>([]);
   const [UpComingMovies, setUpComingMovies] = useState<TMovie[]>([]);
+  const [discoverTv, setDiscoverTv] = useState<TTv[]>([]);
 
   const {
     data: discoverMoviesData,
@@ -43,19 +46,27 @@ const Home = () => {
     error: UpComingMovieError,
   } = useFetchMovieList({ category: "upcoming", page: 1 });
 
+  const {
+    data: discoverTvData,
+    isLoading: discoverTvLoading,
+    error: discoverTvError,
+  } = useFetchDiscoverTV({ pages: 1 });
+
   useEffect(() => {
     if (
       discoverMoviesData ||
       nowPlayingMovie ||
       PopularMovie ||
       TopRatedMovie ||
-      UpComingMovie
+      UpComingMovie ||
+      discoverTvData
     ) {
       setDiscoverMovies(discoverMoviesData);
       setNowPlayingMovies(nowPlayingMovie);
       setPopularMovies(PopularMovie);
       setTopRatedMovies(TopRatedMovie);
       setUpComingMovies(UpComingMovie);
+      setDiscoverTv(discoverTvData);
     }
   }, [
     discoverMoviesData,
@@ -63,6 +74,7 @@ const Home = () => {
     PopularMovie,
     TopRatedMovie,
     UpComingMovie,
+    discoverTvData,
   ]);
 
   return (
@@ -106,6 +118,14 @@ const Home = () => {
         loading={discoverMoviesLoading}
         error={discoverMoviesError}
         linkHref="/discover/movie#1"
+      />
+      <HomeMovieTVs
+        title="Discover TV"
+        linkTitle="See all"
+        data={discoverTv}
+        loading={discoverTvLoading}
+        error={discoverTvError}
+        linkHref="/discover/tv#1"
       />
     </main>
   );
