@@ -23,7 +23,7 @@ const Home = () => {
   return (
     <main className="flex flex-col">
       <HomeMovieCards
-        title="Trending Movies"
+        title="Discover Movies"
         linkHref="/discover/movie"
         linkTitle="See all"
         data={discoverMovies}
