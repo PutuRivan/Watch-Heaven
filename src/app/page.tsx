@@ -11,6 +11,7 @@ const Home = () => {
   const [nowPlayingMovies, setNowPlayingMovies] = useState<TMovie[]>([]);
   const [PopularMovies, setPopularMovies] = useState<TMovie[]>([]);
   const [TopRatedMovies, setTopRatedMovies] = useState<TMovie[]>([]);
+  const [UpComingMovies, setUpComingMovies] = useState<TMovie[]>([]);
 
   const {
     data: discoverMoviesData,
@@ -36,29 +37,43 @@ const Home = () => {
     error: TopRatedMovieError,
   } = useFetchMovieList({ category: "top_rated", page: 1 });
 
+  const {
+    data: UpComingMovie,
+    isLoading: UpComingMovieIsLoading,
+    error: UpComingMovieError,
+  } = useFetchMovieList({ category: "upcoming", page: 1 });
+
   useEffect(() => {
     if (
       discoverMoviesData ||
       nowPlayingMovie ||
       PopularMovie ||
-      TopRatedMovie
+      TopRatedMovie ||
+      UpComingMovie
     ) {
       setDiscoverMovies(discoverMoviesData);
       setNowPlayingMovies(nowPlayingMovie);
       setPopularMovies(PopularMovie);
       setTopRatedMovies(TopRatedMovie);
+      setUpComingMovies(UpComingMovie);
     }
-  }, [discoverMoviesData, nowPlayingMovie, PopularMovie, TopRatedMovie]);
+  }, [
+    discoverMoviesData,
+    nowPlayingMovie,
+    PopularMovie,
+    TopRatedMovie,
+    UpComingMovie,
+  ]);
 
   return (
     <main className="flex flex-col">
       <HomeMovieCards
-        title="Discover Movies"
+        title="Up Coming Movies"
         linkTitle="See all"
-        data={discoverMovies}
-        loading={discoverMoviesLoading}
-        error={discoverMoviesError}
-        linkHref="/discover/movie#1"
+        data={UpComingMovies}
+        loading={UpComingMovieIsLoading}
+        error={UpComingMovieError}
+        linkHref="movie/up-coming#1"
       />
       <HomeMovieCards
         title="Now Playing Movies"
@@ -69,6 +84,14 @@ const Home = () => {
         linkHref="movie/now-playing#1"
       />
       <HomeMovieCards
+        title="Popular Movies"
+        linkTitle="See all"
+        data={PopularMovies}
+        loading={PopularMovieIsLoading}
+        error={PopularMovieError}
+        linkHref="movie/popular#1"
+      />
+      <HomeMovieCards
         title="Top Rated Movies"
         linkTitle="See all"
         data={TopRatedMovies}
@@ -77,12 +100,12 @@ const Home = () => {
         linkHref="movie/top-rated#1"
       />
       <HomeMovieCards
-        title="Popular Movies"
+        title="Discover Movies"
         linkTitle="See all"
-        data={PopularMovies}
-        loading={PopularMovieIsLoading}
-        error={PopularMovieError}
-        linkHref="movie/popular#1"
+        data={discoverMovies}
+        loading={discoverMoviesLoading}
+        error={discoverMoviesError}
+        linkHref="/discover/movie#1"
       />
     </main>
   );
