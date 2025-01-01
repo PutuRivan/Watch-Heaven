@@ -5,6 +5,7 @@ import HomeMovieTVs from "@/components/section/section-card-tv";
 import { useFetchDiscoverMovie } from "@/hooks/movie/useFetchDiscoverMovie";
 import { useFetchMovieList } from "@/hooks/movie/useFetchMovieList";
 import { useFetchDiscoverTV } from "@/hooks/tv/useFetchDiscoverTV";
+import { useFetchTVList } from "@/hooks/tv/useFetchTVList";
 import { TMovie, TTv } from "@/types";
 import { useEffect, useState } from "react";
 
@@ -15,6 +16,10 @@ const Home = () => {
   const [TopRatedMovies, setTopRatedMovies] = useState<TMovie[]>([]);
   const [UpComingMovies, setUpComingMovies] = useState<TMovie[]>([]);
   const [discoverTv, setDiscoverTv] = useState<TTv[]>([]);
+  const [AiringToday, setAiringToday] = useState<TTv[]>([]);
+  const [OnTheAirTV, setOnTheAirTV] = useState<TTv[]>([]);
+  const [PopularTv, setPopularTv] = useState<TTv[]>([]);
+  const [TopRated, setTopRated] = useState<TTv[]>([]);
 
   const {
     data: discoverMoviesData,
@@ -52,6 +57,30 @@ const Home = () => {
     error: discoverTvError,
   } = useFetchDiscoverTV({ pages: 1 });
 
+  const {
+    data: AiringTodayData,
+    isLoading: AiringTodayDataIsLoading,
+    error: AiringTodayDataError,
+  } = useFetchTVList({ category: "airing_today", page: 1 });
+
+  const {
+    data: onTheAirTVData,
+    isLoading: onTheAirTVDataIsLoading,
+    error: onTheAirTVDataError,
+  } = useFetchTVList({ category: "on_the_air", page: 1 });
+
+  const {
+    data: PopularTvData,
+    isLoading: PopularTvDataIsLoading,
+    error: PopularTvDataError,
+  } = useFetchTVList({ category: "popular", page: 1 });
+
+  const {
+    data: TopRatedData,
+    isLoading: TopRatedDataIsLoading,
+    error: TopRatedDataError,
+  } = useFetchTVList({ category: "top_rated", page: 1 });
+
   useEffect(() => {
     if (
       discoverMoviesData ||
@@ -59,7 +88,11 @@ const Home = () => {
       PopularMovie ||
       TopRatedMovie ||
       UpComingMovie ||
-      discoverTvData
+      discoverTvData ||
+      AiringTodayData ||
+      onTheAirTVData ||
+      PopularTvData ||
+      TopRatedData
     ) {
       setDiscoverMovies(discoverMoviesData);
       setNowPlayingMovies(nowPlayingMovie);
@@ -67,6 +100,10 @@ const Home = () => {
       setTopRatedMovies(TopRatedMovie);
       setUpComingMovies(UpComingMovie);
       setDiscoverTv(discoverTvData);
+      setAiringToday(AiringTodayData);
+      setOnTheAirTV(onTheAirTVData);
+      setPopularTv(PopularTvData);
+      setTopRated(TopRatedData);
     }
   }, [
     discoverMoviesData,
@@ -75,6 +112,10 @@ const Home = () => {
     TopRatedMovie,
     UpComingMovie,
     discoverTvData,
+    AiringTodayData,
+    onTheAirTVData,
+    PopularTvData,
+    TopRatedData,
   ]);
 
   return (
@@ -118,6 +159,38 @@ const Home = () => {
         loading={discoverMoviesLoading}
         error={discoverMoviesError}
         linkHref="/discover/movie#1"
+      />
+      <HomeMovieTVs
+        title="Airing Today TV Shows"
+        linkTitle="See all"
+        data={AiringToday}
+        loading={AiringTodayDataIsLoading}
+        error={AiringTodayDataError}
+        linkHref="/tv/airing-today#1"
+      />
+      <HomeMovieTVs
+        title="On The Air TV Shows"
+        linkTitle="See all"
+        data={OnTheAirTV}
+        loading={onTheAirTVDataIsLoading}
+        error={onTheAirTVDataError}
+        linkHref="/tv/on-the-air#1"
+      />
+      <HomeMovieTVs
+        title="Popular TV Shows"
+        linkTitle="See all"
+        data={PopularTv}
+        loading={PopularTvDataIsLoading}
+        error={PopularTvDataError}
+        linkHref="/tv/popular#1"
+      />
+      <HomeMovieTVs
+        title="Top Rated TV Shows"
+        linkTitle="See all"
+        data={TopRated}
+        loading={TopRatedDataIsLoading}
+        error={TopRatedDataError}
+        linkHref="/tv/top-rated#1"
       />
       <HomeMovieTVs
         title="Discover TV"
