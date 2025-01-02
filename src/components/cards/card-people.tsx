@@ -17,7 +17,7 @@ const CardCast = ({ data, loading }: Props) => {
   }
 
   return (
-    <Link href={`/cast/details/${data.id}`}>
+    <Link href={`/people/details/${data.id}`}>
       <Card className="max-h-96 mx-2">
         <CardHeader className="relative flex justify-center items-center overflow-hidden rounded-lg">
           <Image
