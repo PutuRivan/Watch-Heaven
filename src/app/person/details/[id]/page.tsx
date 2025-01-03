@@ -1,13 +1,18 @@
+"use client";
+
+import SectionDetailPerson from "@/components/section/section-detail-person";
+import { useParams } from "next/navigation";
 import React from "react";
 
 const PersonDetail = () => {
-  return (
-    <div className="h-[80vh] grid place-items-center">
-      <h1 className="text-2xl ">
-        Mohon Maaf, Halaman Ini Sedang Tahap Pengembangan
-      </h1>
-    </div>
-  );
+  const params = useParams();
+  const { id } = params;
+
+  if (!id) {
+    return <div>Person not found</div>;
+  }
+
+  return <SectionDetailPerson id={~~id} />;
 };
 
 export default PersonDetail;

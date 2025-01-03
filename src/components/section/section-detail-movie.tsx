@@ -45,7 +45,7 @@ const SectionMovieDetail = ({ id }: Props) => {
           <figure className="w-1/3 object-cover transition-transform duration-300 hover:scale-105">
             <Image
               src={process.env.NEXT_PUBLIC_IMAGE_URL + detailMovie?.poster_path}
-              alt={detailMovie?.title || "Movie Poster"}
+              alt={detailMovie?.title || "Sorry Image Not Found"}
               width={400}
               height={200}
             />
