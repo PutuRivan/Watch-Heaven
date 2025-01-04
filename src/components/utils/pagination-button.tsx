@@ -14,7 +14,7 @@ interface Props {
   onPageChange: (page: number) => void;
 }
 
-const PaginationMovieButton = ({ currentPage, onPageChange }: Props) => {
+const PaginationButton = ({ currentPage, onPageChange }: Props) => {
   const handlePrev = () => {
     if (currentPage > 1) {
       const newPage = currentPage - 1;
@@ -30,7 +30,7 @@ const PaginationMovieButton = ({ currentPage, onPageChange }: Props) => {
   };
 
   return (
-    <Pagination>
+    <Pagination className="mt-8">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
@@ -63,4 +63,4 @@ const PaginationMovieButton = ({ currentPage, onPageChange }: Props) => {
   );
 };
 
-export default PaginationMovieButton;
+export default PaginationButton;

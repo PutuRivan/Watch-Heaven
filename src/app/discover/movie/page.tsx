@@ -1,19 +1,19 @@
 "use client";
 
-import PaginationMovie from "@/components/section/section-pagination-movie";
-import { useFetchDiscoverMovie } from "@/hooks/movie/useFetchDiscoverMovie";
-import { TMovie } from "@/types";
+import SectionPagination from "@/components/section/container-section-pagination";
+import { useFetchDiscover } from "@/hooks/useFetchDiscover";
+import { TAll } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const DiscoverMovie = () => {
-  const [discoverMovies, setDiscoverMovies] = useState<TMovie[]>([]);
+  const [discoverMovies, setDiscoverMovies] = useState<TAll[]>([]);
   const [onPage, setOnPage] = useState(1);
 
   const {
     data: discoverMovie,
     isLoading: discoverMovieIsLoading,
     error: discoverMovieError,
-  } = useFetchDiscoverMovie({ pages: onPage });
+  } = useFetchDiscover({ category: "movie", page: onPage });
 
   useEffect(() => {
     if (discoverMovie) {
@@ -22,13 +22,14 @@ const DiscoverMovie = () => {
   }, [discoverMovie]);
 
   return (
-    <PaginationMovie
+    <SectionPagination
       title="Discover Movies"
       data={discoverMovies}
-      IsLoading={discoverMovieIsLoading}
-      IsError={discoverMovieError}
+      isLoading={discoverMovieIsLoading}
+      error={discoverMovieError}
       onPage={onPage}
       setOnPage={setOnPage}
+      category="movie"
     />
   );
 };

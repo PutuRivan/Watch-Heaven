@@ -1,19 +1,19 @@
 "use client";
 
-import PaginationTV from "@/components/section/section-pagination-tv";
-import { useFetchDiscoverTV } from "@/hooks/tv/useFetchDiscoverTV";
-import { TTv } from "@/types";
+import SectionPagination from "@/components/section/container-section-pagination";
+import { useFetchDiscover } from "@/hooks/useFetchDiscover";
+import { TAll } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const DiscoverTV = () => {
-  const [discoverTVs, setDiscoverTVs] = useState<TTv[]>([]);
+  const [discoverTVs, setDiscoverTVs] = useState<TAll[]>([]);
   const [onPage, setOnPage] = useState(1);
 
   const {
     data: discoverTV,
     isLoading: discoverTVIsLoading,
     error: discoverTVError,
-  } = useFetchDiscoverTV({ pages: onPage });
+  } = useFetchDiscover({ category: "tv", page: onPage });
 
   useEffect(() => {
     if (discoverTV) {
@@ -22,11 +22,11 @@ const DiscoverTV = () => {
   }, [discoverTV]);
 
   return (
-    <PaginationTV
+    <SectionPagination
       title="Discover TV"
       data={discoverTVs}
-      IsLoading={discoverTVIsLoading}
-      IsError={discoverTVError}
+      isLoading={discoverTVIsLoading}
+      error={discoverTVError}
       onPage={onPage}
       setOnPage={setOnPage}
     />

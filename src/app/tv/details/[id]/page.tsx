@@ -1,6 +1,6 @@
 "use client";
 
-import SectionTVDetail from "@/components/section/section-detail-tv";
+import SectionTVDetail from "@/components/section/container-section-detail-tv";
 import { useParams } from "next/navigation";
 import React from "react";
 

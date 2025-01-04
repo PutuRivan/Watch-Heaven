@@ -1,6 +1,6 @@
 "use client";
 
-import SectionDetailPerson from "@/components/section/section-detail-person";
+import SectionDetailPerson from "@/components/section/container-section-detail-person";
 import { useParams } from "next/navigation";
 import React from "react";
 

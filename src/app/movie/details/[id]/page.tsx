@@ -1,6 +1,6 @@
 "use client";
 
-import SectionMovieDetail from "@/components/section/section-detail-movie";
+import SectionMovieDetail from "@/components/section/container-section-detail-movie";
 import { useParams } from "next/navigation";
 import React from "react";
 

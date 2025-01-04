@@ -1,3 +1,4 @@
+import { TAll } from "@/types";
 import React from "react";
 import {
   Carousel,
@@ -5,30 +6,31 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import CardMovie from "../cards/card-movie";
-import CardSkeleton from "../skeletons/card-skeleton";
-import { TMovie } from "@/types";
+} from "../ui/carousel";
+import Cards from "./cards";
 
 interface Props {
-  movies: TMovie[];
-  loading?: boolean;
-  error?: Error | null;
+  datas: TAll[];
+  loading: boolean;
+  error?: Error | null | boolean;
+  category: string;
 }
 
-const CarouselCardsMovie = ({ movies, loading, error }: Props) => {
-  if (loading) {
-    return <CardSkeleton />;
-  }
+const Carousels = ({ datas, loading, error, category }: Props) => {
   return (
     <Carousel className="w-full">
       <CarouselContent className="flex justify-center">
-        {movies?.map((movie, index) => (
+        {datas?.map((data, index) => (
           <CarouselItem
             key={index}
             className="md:basis-1/3 lg:basis-1/6 sm:1/1"
           >
-            <CardMovie data={movie} loading={loading} error={error} />
+            <Cards
+              data={data}
+              loading={loading}
+              error={error}
+              category={category}
+            />
           </CarouselItem>
         ))}
       </CarouselContent>
@@ -40,4 +42,4 @@ const CarouselCardsMovie = ({ movies, loading, error }: Props) => {
   );
 };
 
-export default CarouselCardsMovie;
+export default Carousels;

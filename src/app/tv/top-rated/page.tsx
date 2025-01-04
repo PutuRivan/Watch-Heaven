@@ -1,18 +1,18 @@
 "use client";
 
-import PaginationTV from "@/components/section/section-pagination-tv";
-import { useFetchTVList } from "@/hooks/tv/useFetchTVList";
-import { TTv } from "@/types";
+import SectionPagination from "@/components/section/container-section-pagination";
+import { useFetchCategoryList } from "@/hooks/useFetchCategoryList";
+import { TAll } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const TopRated = () => {
-  const [TopRated, setTopRated] = useState<TTv[]>([]);
+  const [TopRated, setTopRated] = useState<TAll[]>([]);
   const [onPage, setOnPage] = useState(1);
   const {
     data: TopRatedData,
     isLoading: TopRatedDataIsLoading,
     error: TopRatedDataError,
-  } = useFetchTVList({ category: "top_rated", page: onPage });
+  } = useFetchCategoryList({ category: "tv", list: "top_rated", page: onPage });
 
   useEffect(() => {
     if (TopRatedData) {
@@ -21,11 +21,11 @@ const TopRated = () => {
   }, [TopRatedData]);
 
   return (
-    <PaginationTV
+    <SectionPagination
       title="Top Rated TV Shows"
       data={TopRated}
-      IsLoading={TopRatedDataIsLoading}
-      IsError={TopRatedDataError}
+      isLoading={TopRatedDataIsLoading}
+      error={TopRatedDataError}
       onPage={onPage}
       setOnPage={setOnPage}
     />

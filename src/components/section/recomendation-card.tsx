@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { TTvRecomendation } from "@/types";
 import { api } from "@/lib/axios";
-import CardTV from "../cards/card-tv";
+import { TAll } from "@/types";
+import React, { useEffect, useState } from "react";
+import Cards from "../utils/cards";
 
 interface Props {
   id: number;
+  category: string;
 }
 
-const TVDetailRecomendation = ({ id }: Props) => {
-  const [recomendationTV, setrecomendationTV] = useState<TTvRecomendation[]>();
+const SectionRecomendation = ({ id, category }: Props) => {
+  const [recomendation, setRecomendation] = useState<TAll[]>();
   const [recomendationIsLoading, setRecomendationIsLoading] = useState(false);
   const [recomendationError, setRecomendationError] = useState(false);
 
@@ -16,8 +17,8 @@ const TVDetailRecomendation = ({ id }: Props) => {
     const fetchRecomendation = async () => {
       setRecomendationIsLoading(true);
       try {
-        const response = await api.get(`/tv/${id}/recommendations`);
-        setrecomendationTV(response.data.results);
+        const response = await api.get(`/${category}/${id}/recommendations`);
+        setRecomendation(response.data.results);
         setRecomendationIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -26,20 +27,21 @@ const TVDetailRecomendation = ({ id }: Props) => {
     };
 
     fetchRecomendation();
-  }, [id]);
-
+  }, [id, category]);
+  
   return (
     <div className="grid grid-cols-4 gap-4">
-      {recomendationTV?.map((data, index) => (
-        <CardTV
+      {recomendation?.map((data, index) => (
+        <Cards
           data={data}
           loading={recomendationIsLoading}
           error={recomendationError}
           key={index}
+          category="movie"
         />
       ))}
     </div>
   );
 };
 
-export default TVDetailRecomendation;
+export default SectionRecomendation;

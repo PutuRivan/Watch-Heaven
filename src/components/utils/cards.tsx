@@ -1,27 +1,29 @@
+import Link from "next/link";
 import React from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Image from "next/image";
-import Link from "next/link";
 import CardSkeleton from "../skeletons/card-skeleton";
-import { TTv } from "@/types";
+import { TAll } from "@/types";
 
 interface Props {
-  data: TTv;
+  data: TAll;
+  category: string;
   loading: boolean | undefined;
   error?: Error | null | boolean;
 }
 
-const CardTV = ({ data, loading }: Props) => {
+const Cards = ({ category, data, loading }: Props) => {
   if (loading) {
     return <CardSkeleton />;
   }
-
   return (
-    <Link href={`/tv/details/${data.id}`}>
+    <Link href={`/${category}/details/${data.id}`}>
       <Card className="max-h-96 mx-2">
         <CardHeader className="relative flex justify-center items-center overflow-hidden rounded-lg">
           <Image
-            src={process.env.NEXT_PUBLIC_IMAGE_URL + data.poster_path}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${
+              data.poster_path || data.profile_path
+            }`}
             alt="logo"
             width={300}
             height={200}
@@ -29,11 +31,11 @@ const CardTV = ({ data, loading }: Props) => {
           />
         </CardHeader>
         <CardContent className="flex justify-center pb-5">
-          <p className="text-center">{data.name}</p>
+          <p className="text-center">{data.title || data.name}</p>
         </CardContent>
       </Card>
     </Link>
   );
 };
 
-export default CardTV;
+export default Cards;

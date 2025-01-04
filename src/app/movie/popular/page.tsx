@@ -1,19 +1,23 @@
 "use client";
 
-import PaginationMovie from "@/components/section/section-pagination-movie";
-import { useFetchMovieList } from "@/hooks/movie/useFetchMovieList";
-import { TMovie } from "@/types";
+import SectionPagination from "@/components/section/container-section-pagination";
+import { useFetchCategoryList } from "@/hooks/useFetchCategoryList";
+import { TAll } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const PopularMovie = () => {
-  const [PopularMovies, setPopularMovies] = useState<TMovie[]>([]);
+  const [PopularMovies, setPopularMovies] = useState<TAll[]>([]);
   const [onPage, setOnPage] = useState(1);
 
   const {
     data: PopularMovie,
     isLoading: PopularMovieIsLoading,
     error: PopularMovieError,
-  } = useFetchMovieList({ category: "popular", page: onPage });
+  } = useFetchCategoryList({
+    category: "movie",
+    list: "popular",
+    page: onPage,
+  });
 
   useEffect(() => {
     if (PopularMovie) {
@@ -22,13 +26,14 @@ const PopularMovie = () => {
   }, [PopularMovie]);
 
   return (
-    <PaginationMovie
+    <SectionPagination
       title="Popular Movies"
       data={PopularMovies}
-      IsLoading={PopularMovieIsLoading}
-      IsError={PopularMovieError}
+      isLoading={PopularMovieIsLoading}
+      error={PopularMovieError}
       onPage={onPage}
       setOnPage={setOnPage}
+      category="movie"
     />
   );
 };

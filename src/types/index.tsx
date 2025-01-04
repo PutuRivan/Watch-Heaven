@@ -96,24 +96,31 @@ export type TTvCast = {
   order: number;
 };
 
-export type TSearch = {
+export type TAll = {
   adult: boolean;
   backdrop_path: string;
+  genre_ids: number[];
   id: number;
-  title: string;
   original_language: string;
   original_title: string;
   overview: string;
-  poster_path: string;
-  media_type: string;
-  genre_ids: number[];
   popularity: number;
+  poster_path: string;
   release_date: string;
+  title: string;
   video: boolean;
   vote_average: number;
   vote_count: number;
-  profile_path: string;
+  media_type: string;
+  gender: number;
+  known_for_department: string;
   name: string;
+  original_name: string;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+  first_air_date: string;
+  origin_country: string[];
 };
-
-

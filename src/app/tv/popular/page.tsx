@@ -1,18 +1,18 @@
 "use client";
 
-import PaginationTV from "@/components/section/section-pagination-tv";
-import { useFetchTVList } from "@/hooks/tv/useFetchTVList";
-import { TTv } from "@/types";
+import SectionPagination from "@/components/section/container-section-pagination";
+import { useFetchCategoryList } from "@/hooks/useFetchCategoryList";
+import { TAll } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const PopularTv = () => {
-  const [PopularTv, setPopularTv] = useState<TTv[]>([]);
+  const [PopularTv, setPopularTv] = useState<TAll[]>([]);
   const [onPage, setOnPage] = useState(1);
   const {
     data: PopularTvData,
     isLoading: PopularTvDataIsLoading,
     error: PopularTvDataError,
-  } = useFetchTVList({ category: "popular", page: onPage });
+  } = useFetchCategoryList({ category: "tv", list: "popular", page: onPage });
 
   useEffect(() => {
     if (PopularTvData) {
@@ -21,13 +21,14 @@ const PopularTv = () => {
   }, [PopularTvData]);
 
   return (
-    <PaginationTV
+    <SectionPagination
       title="Popular TV Shows"
       data={PopularTv}
-      IsLoading={PopularTvDataIsLoading}
-      IsError={PopularTvDataError}
+      isLoading={PopularTvDataIsLoading}
+      error={PopularTvDataError}
       onPage={onPage}
       setOnPage={setOnPage}
+      category="tv"
     />
   );
 };

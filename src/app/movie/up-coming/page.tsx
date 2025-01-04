@@ -1,19 +1,23 @@
 "use client";
 
-import PaginationMovie from "@/components/section/section-pagination-movie";
-import { useFetchMovieList } from "@/hooks/movie/useFetchMovieList";
-import { TMovie } from "@/types";
+import SectionPagination from "@/components/section/container-section-pagination";
+import { useFetchCategoryList } from "@/hooks/useFetchCategoryList";
+import { TAll } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const UpComingMovie = () => {
-  const [UpComingMovies, setUpComingMovies] = useState<TMovie[]>([]);
+  const [UpComingMovies, setUpComingMovies] = useState<TAll[]>([]);
   const [onPage, setOnPage] = useState(1);
 
   const {
     data: UpComingMovie,
     isLoading: UpComingMovieIsLoading,
     error: UpComingMovieError,
-  } = useFetchMovieList({ category: "upcoming", page: onPage });
+  } = useFetchCategoryList({
+    category: "movie",
+    list: "upcoming",
+    page: onPage,
+  });
 
   useEffect(() => {
     if (UpComingMovie) {
@@ -22,13 +26,14 @@ const UpComingMovie = () => {
   }, [UpComingMovie]);
 
   return (
-    <PaginationMovie
+    <SectionPagination
       title="Up Coming Movies"
       data={UpComingMovies}
-      IsLoading={UpComingMovieIsLoading}
-      IsError={UpComingMovieError}
+      isLoading={UpComingMovieIsLoading}
+      error={UpComingMovieError}
       onPage={onPage}
       setOnPage={setOnPage}
+      category="movie"
     />
   );
 };

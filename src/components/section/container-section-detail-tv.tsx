@@ -2,14 +2,15 @@
 
 import TableDetail from "@/components/table/table-detail";
 import { Button } from "@/components/ui/button";
-import { useFetchTVDetail } from "@/hooks/tv/useFetchTVDetail";
 import { PlayCircleIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import ButtonBack from "../utils/button-back";
 import { PiListHeart } from "react-icons/pi";
-import CarouselCastTV from "../carousel/carousel-card-cast-tv";
-import TVDetailRecomendation from "./section-detail-recomendation-tv";
+import { Badge } from "../ui/badge";
+import { useFetchDetails } from "@/hooks/useFetchDetails";
+import SectionDetailCast from "./container-section-detail-cast";
+import SectionDetailRecomendation from "./container-section-detail-recomendation";
 
 interface Genre {
   id: number;
@@ -26,7 +27,7 @@ const SectionTVDetail = ({ id }: Props) => {
     data: detailTV,
     isLoading: detailTVIsLoading,
     error: detailTVError,
-  } = useFetchTVDetail({ id: Number(id) });
+  } = useFetchDetails({ category: "tv", id: Number(id) });
 
   // Loading state
   if (detailTVIsLoading) {
@@ -37,6 +38,7 @@ const SectionTVDetail = ({ id }: Props) => {
   if (detailTVError) {
     return <h1>Error: {detailTVError.message}</h1>;
   }
+
   return (
     <>
       <ButtonBack />
@@ -52,19 +54,14 @@ const SectionTVDetail = ({ id }: Props) => {
           </figure>
 
           <div className="flex flex-col gap-2">
-            <h1 className="text-2xl text-center font-bold">
-              {detailTV?.name}
-            </h1>
+            <h1 className="text-2xl text-center font-bold">{detailTV?.name}</h1>
             <div className="flex flex-col items-center gap-5">
               {/* Genre */}
               <div className="flex flex-row justify-center gap-2">
                 {detailTV?.genres?.map((genre: Genre, index: React.Key) => (
-                  <div
-                    key={index}
-                    className="bg-neutral-500 p-2 rounded-lg text-white"
-                  >
-                    <h3>{genre.name}</h3>
-                  </div>
+                  <Badge key={index} variant={"secondary"}>
+                    {genre.name}
+                  </Badge>
                 ))}
               </div>
 
@@ -94,17 +91,9 @@ const SectionTVDetail = ({ id }: Props) => {
           </div>
         </section>
 
-        <section>
-          <h1 className="text-2xl text-center font-bold">Cast</h1>
-          <CarouselCastTV id={~~id} />
-        </section>
+        <SectionDetailCast list="tv" category="person" id={~~id} />
 
-        <section>
-          <h1 className="text-2xl px-5 font-bold">Recommendations</h1>
-          <div className="">
-            <TVDetailRecomendation id={~~id} />
-          </div>
-        </section>
+        <SectionDetailRecomendation id={~~id} category="tv" />
       </main>
     </>
   );

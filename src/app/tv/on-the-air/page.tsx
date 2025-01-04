@@ -1,18 +1,22 @@
 "use client";
 
-import PaginationTV from "@/components/section/section-pagination-tv";
-import { useFetchTVList } from "@/hooks/tv/useFetchTVList";
-import { TTv } from "@/types";
+import SectionPagination from "@/components/section/container-section-pagination";
+import { useFetchCategoryList } from "@/hooks/useFetchCategoryList";
+import { TAll } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const OnTheAirTV = () => {
-  const [OnTheAirTV, setOnTheAirTV] = useState<TTv[]>([]);
+  const [OnTheAirTV, setOnTheAirTV] = useState<TAll[]>([]);
   const [onPage, setOnPage] = useState(1);
   const {
     data: onTheAirTVData,
     isLoading: onTheAirTVDataIsLoading,
     error: onTheAirTVDataError,
-  } = useFetchTVList({ category: "on_the_air", page: onPage });
+  } = useFetchCategoryList({
+    category: "tv",
+    list: "on_the_air",
+    page: onPage,
+  });
 
   useEffect(() => {
     if (onTheAirTVData) {
@@ -21,13 +25,14 @@ const OnTheAirTV = () => {
   }, [onTheAirTVData]);
 
   return (
-    <PaginationTV
+    <SectionPagination
       title="On The Air TV Shows"
       data={OnTheAirTV}
-      IsLoading={onTheAirTVDataIsLoading}
-      IsError={onTheAirTVDataError}
+      isLoading={onTheAirTVDataIsLoading}
+      error={onTheAirTVDataError}
       onPage={onPage}
       setOnPage={setOnPage}
+      category="tv"
     />
   );
 };

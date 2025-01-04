@@ -1,9 +1,9 @@
 import React from "react";
 import ButtonBack from "../utils/button-back";
-import { useFetchPersonDetail } from "@/hooks/cast/useFetchPersonDetail";
 import Image from "next/image";
 import ReadMore from "./section-readmore-person";
 import LimitedList from "./section-detail-limitedList";
+import { useFetchDetails } from "@/hooks/useFetchDetails";
 
 interface Props {
   id: number;
@@ -14,7 +14,7 @@ const SectionDetailPerson = ({ id }: Props) => {
     data: personDetail,
     isLoading: personDetailisLoading,
     error: personDetailError,
-  } = useFetchPersonDetail({ id });
+  } = useFetchDetails({ category: "person", id: Number(id) });
 
   // Loading state
   if (personDetailisLoading) {

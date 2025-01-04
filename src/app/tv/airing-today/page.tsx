@@ -1,18 +1,22 @@
 "use client";
 
-import PaginationTV from "@/components/section/section-pagination-tv";
-import { useFetchTVList } from "@/hooks/tv/useFetchTVList";
-import { TTv } from "@/types";
+import SectionPagination from "@/components/section/container-section-pagination";
+import { useFetchCategoryList } from "@/hooks/useFetchCategoryList";
+import { TAll } from "@/types";
 import React, { useEffect, useState } from "react";
 
 const AiringToday = () => {
-  const [AiringToday, setAiringToday] = useState<TTv[]>([]);
+  const [AiringToday, setAiringToday] = useState<TAll[]>([]);
   const [onPage, setOnPage] = useState(1);
   const {
     data: AiringTodayData,
     isLoading: AiringTodayDataIsLoading,
     error: AiringTodayDataError,
-  } = useFetchTVList({ category: "airing_today", page: onPage });
+  } = useFetchCategoryList({
+    category: "tv",
+    list: "airing_today",
+    page: onPage,
+  });
 
   useEffect(() => {
     if (AiringTodayData) {
@@ -21,13 +25,14 @@ const AiringToday = () => {
   }, [AiringTodayData]);
 
   return (
-    <PaginationTV
+    <SectionPagination
       title="Airing Today TV Shows"
       data={AiringToday}
-      IsLoading={AiringTodayDataIsLoading}
-      IsError={AiringTodayDataError}
+      isLoading={AiringTodayDataIsLoading}
+      error={AiringTodayDataError}
       onPage={onPage}
       setOnPage={setOnPage}
+      category="tv"
     />
   );
 };

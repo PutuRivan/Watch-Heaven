@@ -2,14 +2,15 @@
 
 import TableDetail from "@/components/table/table-detail";
 import { Button } from "@/components/ui/button";
-import { useFetchMovieDetail } from "@/hooks/movie/useFetchMovieDetail";
 import { PlayCircleIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import CarouselCastMovie from "../carousel/carousel-card-cast";
 import ButtonBack from "../utils/button-back";
 import { PiListHeart } from "react-icons/pi";
-import MovieDetailRecomendation from "./section-detail-recomendation-movie";
+import { Badge } from "../ui/badge";
+import { useFetchDetails } from "@/hooks/useFetchDetails";
+import SectionDetailCast from "./container-section-detail-cast";
+import SectionDetailRecomendation from "./container-section-detail-recomendation";
 
 interface Genre {
   id: number;
@@ -26,7 +27,7 @@ const SectionMovieDetail = ({ id }: Props) => {
     data: detailMovie,
     isLoading: detailMovieIsLoading,
     error: detailMovieError,
-  } = useFetchMovieDetail({ id: Number(id) });
+  } = useFetchDetails({ category: "movie", id: Number(id) });
 
   // Loading state
   if (detailMovieIsLoading) {
@@ -37,6 +38,7 @@ const SectionMovieDetail = ({ id }: Props) => {
   if (detailMovieError) {
     return <h1>Error: {detailMovieError.message}</h1>;
   }
+
   return (
     <>
       <ButtonBack />
@@ -59,12 +61,9 @@ const SectionMovieDetail = ({ id }: Props) => {
               {/* Genre */}
               <div className="flex flex-row justify-center gap-2">
                 {detailMovie?.genres?.map((genre: Genre, index: React.Key) => (
-                  <div
-                    key={index}
-                    className="bg-neutral-500 p-2 rounded-lg text-white"
-                  >
-                    <h3>{genre.name}</h3>
-                  </div>
+                  <Badge key={index} variant={"secondary"}>
+                    {genre.name}
+                  </Badge>
                 ))}
               </div>
 
@@ -94,17 +93,9 @@ const SectionMovieDetail = ({ id }: Props) => {
           </div>
         </section>
 
-        <section>
-          <h1 className="text-2xl text-center font-bold">Cast</h1>
-          <CarouselCastMovie id={~~id} />
-        </section>
+        <SectionDetailCast category="person" id={~~id} list="movie" />
 
-        <section>
-          <h1 className="text-2xl px-5 font-bold">Recommendations</h1>
-          <div className="">
-            <MovieDetailRecomendation id={~~id} />
-          </div>
-        </section>
+        <SectionDetailRecomendation id={~~id} category="movie" />
       </main>
     </>
   );

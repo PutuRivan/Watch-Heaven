@@ -1,85 +1,82 @@
 "use client";
 
-import HomeMovieCards from "@/components/section/section-card-movies";
-import HomeMovieTVs from "@/components/section/section-card-tv";
-import { useFetchDiscoverMovie } from "@/hooks/movie/useFetchDiscoverMovie";
-import { useFetchMovieList } from "@/hooks/movie/useFetchMovieList";
-import { useFetchDiscoverTV } from "@/hooks/tv/useFetchDiscoverTV";
-import { useFetchTVList } from "@/hooks/tv/useFetchTVList";
-import { TMovie, TTv } from "@/types";
+import SectionCarousel from "@/components/section/container-section-home-carousel";
+import { useFetchCategoryList } from "@/hooks/useFetchCategoryList";
+import { useFetchDiscover } from "@/hooks/useFetchDiscover";
+import { TAll } from "@/types";
 import { useEffect, useState } from "react";
 
 const Home = () => {
-  const [discoverMovies, setDiscoverMovies] = useState<TMovie[]>([]);
-  const [nowPlayingMovies, setNowPlayingMovies] = useState<TMovie[]>([]);
-  const [PopularMovies, setPopularMovies] = useState<TMovie[]>([]);
-  const [TopRatedMovies, setTopRatedMovies] = useState<TMovie[]>([]);
-  const [UpComingMovies, setUpComingMovies] = useState<TMovie[]>([]);
-  const [discoverTv, setDiscoverTv] = useState<TTv[]>([]);
-  const [AiringToday, setAiringToday] = useState<TTv[]>([]);
-  const [OnTheAirTV, setOnTheAirTV] = useState<TTv[]>([]);
-  const [PopularTv, setPopularTv] = useState<TTv[]>([]);
-  const [TopRated, setTopRated] = useState<TTv[]>([]);
+  const [discoverMovies, setDiscoverMovies] = useState<TAll[]>([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState<TAll[]>([]);
+  const [PopularMovies, setPopularMovies] = useState<TAll[]>([]);
+  const [TopRatedMovies, setTopRatedMovies] = useState<TAll[]>([]);
+  const [UpComingMovies, setUpComingMovies] = useState<TAll[]>([]);
+  const [discoverTv, setDiscoverTv] = useState<TAll[]>([]);
+  const [AiringToday, setAiringToday] = useState<TAll[]>([]);
+  const [OnTheAirTV, setOnTheAirTV] = useState<TAll[]>([]);
+  const [PopularTv, setPopularTv] = useState<TAll[]>([]);
+  const [TopRated, setTopRated] = useState<TAll[]>([]);
 
   const {
     data: discoverMoviesData,
     isLoading: discoverMoviesLoading,
     error: discoverMoviesError,
-  } = useFetchDiscoverMovie({ pages: 1 });
-
-  const {
-    data: nowPlayingMovie,
-    isLoading: nowPlayingMovieIsLoading,
-    error: nowPlayingMovieError,
-  } = useFetchMovieList({ category: "now_playing", page: 1 });
-
-  const {
-    data: PopularMovie,
-    isLoading: PopularMovieIsLoading,
-    error: PopularMovieError,
-  } = useFetchMovieList({ category: "popular", page: 1 });
-
-  const {
-    data: TopRatedMovie,
-    isLoading: TopRatedMovieIsLoading,
-    error: TopRatedMovieError,
-  } = useFetchMovieList({ category: "top_rated", page: 1 });
-
-  const {
-    data: UpComingMovie,
-    isLoading: UpComingMovieIsLoading,
-    error: UpComingMovieError,
-  } = useFetchMovieList({ category: "upcoming", page: 1 });
+  } = useFetchDiscover({ page: 1, category: "movie" });
 
   const {
     data: discoverTvData,
     isLoading: discoverTvLoading,
     error: discoverTvError,
-  } = useFetchDiscoverTV({ pages: 1 });
+  } = useFetchDiscover({ page: 1, category: "tv" });
+
+  const {
+    data: nowPlayingMovie,
+    isLoading: nowPlayingMovieIsLoading,
+    error: nowPlayingMovieError,
+  } = useFetchCategoryList({ category: "movie", list: "now_playing", page: 1 });
+
+  const {
+    data: PopularMovie,
+    isLoading: PopularMovieIsLoading,
+    error: PopularMovieError,
+  } = useFetchCategoryList({ category: "movie", list: "popular", page: 1 });
+
+  const {
+    data: TopRatedMovie,
+    isLoading: TopRatedMovieIsLoading,
+    error: TopRatedMovieError,
+  } = useFetchCategoryList({ category: "movie", list: "top_rated", page: 1 });
+
+  const {
+    data: UpComingMovie,
+    isLoading: UpComingMovieIsLoading,
+    error: UpComingMovieError,
+  } = useFetchCategoryList({ category: "movie", list: "upcoming", page: 1 });
 
   const {
     data: AiringTodayData,
     isLoading: AiringTodayDataIsLoading,
     error: AiringTodayDataError,
-  } = useFetchTVList({ category: "airing_today", page: 1 });
+  } = useFetchCategoryList({ category: "tv", list: "airing_today", page: 1 });
 
   const {
     data: onTheAirTVData,
     isLoading: onTheAirTVDataIsLoading,
     error: onTheAirTVDataError,
-  } = useFetchTVList({ category: "on_the_air", page: 1 });
+  } = useFetchCategoryList({ category: "tv", list: "on_the_air", page: 1 });
 
   const {
     data: PopularTvData,
     isLoading: PopularTvDataIsLoading,
     error: PopularTvDataError,
-  } = useFetchTVList({ category: "popular", page: 1 });
+  } = useFetchCategoryList({ category: "tv", list: "popular", page: 1 });
 
   const {
     data: TopRatedData,
     isLoading: TopRatedDataIsLoading,
     error: TopRatedDataError,
-  } = useFetchTVList({ category: "top_rated", page: 1 });
+  } = useFetchCategoryList({ category: "tv", list: "top_rated", page: 1 });
 
   useEffect(() => {
     if (
@@ -120,85 +117,95 @@ const Home = () => {
 
   return (
     <main className="flex flex-col">
-      <HomeMovieCards
+      <SectionCarousel
         title="Up Coming Movies"
         linkTitle="See all"
         data={UpComingMovies}
         loading={UpComingMovieIsLoading}
         error={UpComingMovieError}
         linkHref="movie/up-coming#1"
+        category="movie"
       />
-      <HomeMovieCards
+      <SectionCarousel
         title="Now Playing Movies"
         linkTitle="See all"
         data={nowPlayingMovies}
         loading={nowPlayingMovieIsLoading}
         error={nowPlayingMovieError}
         linkHref="movie/now-playing#1"
+        category="movie"
       />
-      <HomeMovieCards
+      <SectionCarousel
         title="Popular Movies"
         linkTitle="See all"
         data={PopularMovies}
         loading={PopularMovieIsLoading}
         error={PopularMovieError}
         linkHref="movie/popular#1"
+        category="movie"
       />
-      <HomeMovieCards
+      <SectionCarousel
         title="Top Rated Movies"
         linkTitle="See all"
         data={TopRatedMovies}
         loading={TopRatedMovieIsLoading}
         error={TopRatedMovieError}
         linkHref="movie/top-rated#1"
+        category="movie"
       />
-      <HomeMovieCards
+      <SectionCarousel
         title="Discover Movies"
         linkTitle="See all"
         data={discoverMovies}
         loading={discoverMoviesLoading}
         error={discoverMoviesError}
         linkHref="/discover/movie#1"
+        category="movie"
       />
-      <HomeMovieTVs
+      <SectionCarousel
         title="Airing Today TV Shows"
         linkTitle="See all"
         data={AiringToday}
         loading={AiringTodayDataIsLoading}
         error={AiringTodayDataError}
         linkHref="/tv/airing-today#1"
+        category="tv"
       />
-      <HomeMovieTVs
+      <SectionCarousel
         title="On The Air TV Shows"
         linkTitle="See all"
         data={OnTheAirTV}
         loading={onTheAirTVDataIsLoading}
         error={onTheAirTVDataError}
         linkHref="/tv/on-the-air#1"
+        category="tv"
       />
-      <HomeMovieTVs
+      <SectionCarousel
         title="Popular TV Shows"
         linkTitle="See all"
         data={PopularTv}
         loading={PopularTvDataIsLoading}
         error={PopularTvDataError}
         linkHref="/tv/popular#1"
+        category="tv"
       />
-      <HomeMovieTVs
+      <SectionCarousel
         title="Top Rated TV Shows"
         linkTitle="See all"
         data={TopRated}
         loading={TopRatedDataIsLoading}
         error={TopRatedDataError}
         linkHref="/tv/top-rated#1"
+        category="tv"
       />
-      <HomeMovieTVs
+      <SectionCarousel
         title="Discover TV"
         linkTitle="See all"
         data={discoverTv}
         loading={discoverTvLoading}
         error={discoverTvError}
         linkHref="/discover/tv#1"
+        category="tv"
       />
     </main>
   );
