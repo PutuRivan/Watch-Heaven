@@ -11,6 +11,8 @@ import { Badge } from "../ui/badge";
 import { useFetchDetails } from "@/hooks/useFetchDetails";
 import SectionDetailCast from "./container-section-detail-cast";
 import SectionDetailRecomendation from "./container-section-detail-recomendation";
+import { useSession } from "next-auth/react";
+import { postFavorite } from "@/lib/action/favorite";
 
 interface Genre {
   id: number;
@@ -22,6 +24,7 @@ interface Props {
 }
 
 const SectionTVDetail = ({ id }: Props) => {
+  const { data: username } = useSession();
   // Fetch TV details
   const {
     data: detailTV,
@@ -38,6 +41,21 @@ const SectionTVDetail = ({ id }: Props) => {
   if (detailTVError) {
     return <h1>Error: {detailTVError.message}</h1>;
   }
+
+  const handleFavorite = async () => {
+    if (!username?.user.name) {
+      return;
+    }
+
+    const response = await postFavorite({
+      id: Number(id),
+      username: username?.user.name,
+      title: detailTV.name,
+      media_type: "tv",
+      poster_path: detailTV.poster_path,
+    });
+    return response;
+  };
 
   return (
     <>
@@ -78,7 +96,13 @@ const SectionTVDetail = ({ id }: Props) => {
 
               {/* Buttons */}
               <div className="flex flex-row gap-2">
-                <Button variant={"destructive"}>
+                <Button
+                  variant={"destructive"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleFavorite();
+                  }}
+                >
                   <PiListHeart />
                   Add Favorite
                 </Button>

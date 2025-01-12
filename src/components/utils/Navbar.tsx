@@ -20,15 +20,22 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "../ui/menubar";
+import { signOut, useSession } from "next-auth/react";
+import { Button } from "../ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const { toast } = useToast();
+  const { data: user } = useSession();
+
   const toggleSearch = (): void => {
     setIsSearchOpen(!isSearchOpen);
   };
+
   const handleSearchSubmit = () => {
     if (searchQuery.trim()) {
       window.location.href = `/search/${searchQuery}`;
@@ -36,6 +43,16 @@ export function Navbar() {
       setSearchQuery("");
     }
   };
+
+  const handlesignOut = () => {
+    signOut();
+    toast({
+      title: "Logout",
+      description: "You have been successfully logged out.",
+      variant: "destructive",
+    });
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10); // bisa Adjust threshold nya
@@ -57,13 +74,6 @@ export function Navbar() {
     >
       {/* Logo */}
       <div className="navbar-start">
-        {/* <Image
-          src="https://placehold.co/600x400/png"
-          alt="Logo"
-          width={60} // Adjusted size for scroll effect
-          height={60}
-          className="circular-image"
-        /> */}
         <h1 className="text-2xl font-bold text-black">WatchHeaven</h1>
       </div>
 
@@ -214,13 +224,36 @@ export function Navbar() {
               <CgProfile size={24} />
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>
-                <Link href={"/login"}>Login</Link>
-              </MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem>
-                <Link href={"/register"}>Register</Link>
-              </MenubarItem>
+              {user?.user.name ? (
+                <>
+                  <MenubarItem>
+                    <h1>{user.user.name}</h1>
+                  </MenubarItem>
+                  <MenubarSeparator />
+                  <MenubarItem>
+                    <Link href={`${user.user.name}/favorite`}>Favorite</Link>
+                  </MenubarItem>
+                  <MenubarItem>
+                    <Button
+                      onClick={handlesignOut}
+                      className="w-full"
+                      variant={"destructive"}
+                    >
+                      Sign Out
+                    </Button>
+                  </MenubarItem>
+                </>
+              ) : (
+                <>
+                  <MenubarItem>
+                    <Link href={"/login"}>Login</Link>
+                  </MenubarItem>
+                  <MenubarSeparator />
+                  <MenubarItem>
+                    <Link href={"/register"}>Register</Link>
+                  </MenubarItem>
+                </>
+              )}
             </MenubarContent>
           </MenubarMenu>
         </Menubar>

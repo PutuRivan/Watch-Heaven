@@ -11,6 +11,8 @@ import { Badge } from "../ui/badge";
 import { useFetchDetails } from "@/hooks/useFetchDetails";
 import SectionDetailCast from "./container-section-detail-cast";
 import SectionDetailRecomendation from "./container-section-detail-recomendation";
+import { postFavorite } from "@/lib/action/favorite";
+import { useSession } from "next-auth/react";
 
 interface Genre {
   id: number;
@@ -22,6 +24,7 @@ interface Props {
 }
 
 const SectionMovieDetail = ({ id }: Props) => {
+  const { data: username } = useSession();
   // Fetch movie details
   const {
     data: detailMovie,
@@ -38,6 +41,21 @@ const SectionMovieDetail = ({ id }: Props) => {
   if (detailMovieError) {
     return <h1>Error: {detailMovieError.message}</h1>;
   }
+
+  const handleFavorite = async () => {
+    if (!username?.user.name) {
+      return;
+    }
+
+    const response = await postFavorite({
+      id: Number(id),
+      username: username?.user.name,
+      title: detailMovie.title,
+      media_type: "movie",
+      poster_path: detailMovie.poster_path,
+    });
+    return response;
+  };
 
   return (
     <>
@@ -80,7 +98,7 @@ const SectionMovieDetail = ({ id }: Props) => {
 
               {/* Buttons */}
               <div className="flex flex-row gap-2">
-                <Button variant={"destructive"}>
+                <Button variant={"destructive"} onClick={handleFavorite}>
                   <PiListHeart />
                   Add Favorite
                 </Button>

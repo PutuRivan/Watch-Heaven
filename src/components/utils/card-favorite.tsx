@@ -1,29 +1,20 @@
+import { Tfavorite } from "@/types";
 import Link from "next/link";
 import React from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Image from "next/image";
-import CardSkeleton from "../skeletons/card-skeleton";
-import { TAll } from "@/types";
 
 interface Props {
-  data: TAll ;
-  category: string;
-  loading: boolean | undefined;
-  error?: Error | null | boolean;
+  data: Tfavorite;
 }
 
-const Cards = ({ category, data, loading }: Props) => {
-  if (loading) {
-    return <CardSkeleton />;
-  }
+const CardFavorite = ({ data }: Props) => {
   return (
-    <Link href={`/${category}/details/${data.id}`}>
+    <Link href={`/${data.media_type}/details/${data.id_dbms}`}>
       <Card className="max-h-96 mx-2">
         <CardHeader className="relative flex justify-center items-center overflow-hidden rounded-lg">
           <Image
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${
-              data.poster_path || data.profile_path
-            }`}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}${data.poster_path}`}
             alt="logo"
             width={300}
             height={200}
@@ -31,11 +22,11 @@ const Cards = ({ category, data, loading }: Props) => {
           />
         </CardHeader>
         <CardContent className="flex justify-center pb-5">
-          <p className="text-center">{data.title || data.name}</p>
+          <p className="text-center">{data.title}</p>
         </CardContent>
       </Card>
     </Link>
   );
 };
 
-export default Cards;
+export default CardFavorite;
