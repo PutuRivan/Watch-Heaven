@@ -23,6 +23,14 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -31,6 +39,7 @@ export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
   const { toast } = useToast();
   const { data: user } = useSession();
+  const { setTheme } = useTheme();
 
   const toggleSearch = (): void => {
     setIsSearchOpen(!isSearchOpen);
@@ -63,6 +72,7 @@ export function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
   return (
     <nav
       className={cn(
@@ -178,7 +188,7 @@ export function Navbar() {
         <div
           ref={searchRef}
           className={cn(
-            "absolute right-24 flex items-center bg-white rounded-full overflow-hidden transition-all duration-300 ease-in-out",
+            "absolute right-44 flex items-center bg-white rounded-full overflow-hidden transition-all duration-300 ease-in-out",
             isSearchOpen
               ? "w-46 px-1 shadow-md border border-neutral-100"
               : "w-8"
@@ -258,6 +268,26 @@ export function Navbar() {
           </MenubarMenu>
         </Menubar>
         {/* Theme */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setTheme("light")}>
+              Light
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")}>
+              Dark
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("system")}>
+              System
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </nav>
   );
