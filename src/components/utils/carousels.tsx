@@ -8,6 +8,7 @@ import {
   CarouselPrevious,
 } from "../ui/carousel";
 import Cards from "./cards";
+import CardSkeleton from "../skeletons/card-skeleton";
 
 interface Props {
   datas: TAll[];
@@ -25,12 +26,16 @@ const Carousels = ({ datas, loading, error, category }: Props) => {
             key={index}
             className="md:basis-1/3 lg:basis-1/6 sm:1/1"
           >
-            <Cards
-              data={data}
-              loading={loading}
-              error={error}
-              category={category}
-            />
+            {loading ? (
+              <CardSkeleton />
+            ) : (
+              <Cards
+                data={data}
+                loading={loading}
+                error={error}
+                category={category}
+              />
+            )}
           </CarouselItem>
         ))}
       </CarouselContent>

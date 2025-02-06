@@ -2,6 +2,7 @@ import React from "react";
 import Headers from "../utils/Header";
 import { TAll } from "@/types";
 import Carousels from "../utils/carousels";
+import CardSkeleton from "../skeletons/card-skeleton";
 
 interface Props {
   title: string;
@@ -25,12 +26,16 @@ const SectionCarousel = ({
   return (
     <div>
       <Headers title={title} linkHref={linkHref} linkTitle={linkTitle} />
-      <Carousels
-        datas={data}
-        loading={loading}
-        error={error}
-        category={category}
-      />
+      {loading ? (
+        <CardSkeleton />
+      ) : (
+        <Carousels
+          datas={data}
+          loading={loading}
+          error={error}
+          category={category}
+        />
+      )}
     </div>
   );
 };
