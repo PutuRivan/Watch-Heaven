@@ -31,12 +31,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [HamburgerisOpen, setHamburgerisOpen] = useState<boolean>(false);
   const { toast } = useToast();
   const { data: user } = useSession();
   const { setTheme } = useTheme();
@@ -84,11 +87,13 @@ export function Navbar() {
     >
       {/* Logo */}
       <div className="navbar-start">
-        <h1 className="text-2xl font-bold text-black">WatchHeaven</h1>
+        <h1 className="text-xl md:text-xl lg:text-2xl font-bold text-black">
+          WatchHeaven
+        </h1>
       </div>
 
       {/* NavigationMenu */}
-      <NavigationMenu className="navbar-center">
+      <NavigationMenu className="hidden md:hidden lg:flex lg:navbar-center">
         <NavigationMenuList>
           <NavigationMenuItem className="mx-2">
             <Link href="/" legacyBehavior passHref>
@@ -183,12 +188,12 @@ export function Navbar() {
       </NavigationMenu>
 
       {/* Action Button */}
-      <div className="navbar-end gap-5">
+      <div className="hidden md:hidden lg:flex lg:navbar-end gap-3">
         {/* Search */}
         <div
           ref={searchRef}
           className={cn(
-            "absolute right-44 flex items-center bg-white rounded-full overflow-hidden transition-all duration-300 ease-in-out",
+            "absolute right-40 flex items-center bg-white rounded-full overflow-hidden transition-all duration-300 ease-in-out",
             isSearchOpen
               ? "w-46 px-1 shadow-md border border-neutral-100"
               : "w-8"
@@ -288,6 +293,114 @@ export function Navbar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+      </div>
+
+      {/* Mobile */}
+      <div className="sm:flex md:hidden lg:hidden">
+        <Sheet>
+          <SheetTrigger>
+            <RxHamburgerMenu
+              size={24}
+              onClick={() => setHamburgerisOpen(!HamburgerisOpen)}
+              className="cursor-pointer"
+            />
+          </SheetTrigger>
+          <SheetContent className="pt-10">
+            <NavigationMenu>
+              <NavigationMenuList className="flex flex-col">
+                <NavigationMenuItem >
+                  <Link href="/" legacyBehavior passHref>
+                    Home
+                  </Link>
+                </NavigationMenuItem>
+                {/* Movie */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Movie</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="flex flex-col gap-3 p-4 md:w-[100px] lg:w-[300px]">
+                      <li>
+                        <Link
+                          href="/movie/now-playing#1"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Now Playing
+                          </div>
+                        </Link>
+                        <Link
+                          href="/movie/top-rated#1"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Top Rated
+                          </div>
+                        </Link>
+                        <Link
+                          href="/movie/popular#1"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Popular
+                          </div>
+                        </Link>
+                        <Link
+                          href="/movie/up-coming#1"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Up Coming
+                          </div>
+                        </Link>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                {/* TV */}
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>TV</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="flex flex-col gap-3 p-4 md:w-[100px] lg:w-[300px]">
+                      <li>
+                        <Link
+                          href="/tv/on-the-air#1"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            On The Air
+                          </div>
+                        </Link>
+                        <Link
+                          href="/tv/top-rated#1"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Top Rated
+                          </div>
+                        </Link>
+                        <Link
+                          href="/tv/popular#1"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Popular
+                          </div>
+                        </Link>
+                        <Link
+                          href="/tv/airing-today#1"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        >
+                          <div className="text-sm font-medium leading-none">
+                            Airing Today
+                          </div>
+                        </Link>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </SheetContent>
+        </Sheet>
       </div>
     </nav>
   );
