@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 interface Props {
   title: string;
@@ -14,9 +15,9 @@ const Headers = ({ title, linkHref, linkTitle }: Props) => {
       {linkHref && linkTitle ? (
         <Link
           href={linkHref}
-          className="md:text-xl text-sm text-black hover:underline hover:text-blue-500 transition-all"
+          className="md:text-md lg:text-lg text-sm text-black hover:underline hover:text-blue-500 transition-all flex items-center gap-1"
         >
-          {linkTitle}
+          See All <IoIosArrowRoundForward size={24}/>
         </Link>
       ) : null}
     </div>
